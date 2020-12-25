@@ -129,18 +129,30 @@ export default {
 
         case 'rotate-left':
           cropper.rotate(-90);
+          this.update({
+            changed: true
+          });
           break;
 
         case 'rotate-right':
           cropper.rotate(90);
+          this.update({
+            changed: true
+          });
           break;
 
         case 'flip-horizontal':
           cropper.scaleX(-cropper.getData().scaleX || -1);
+          this.update({
+            changed: true
+          });
           break;
 
         case 'flip-vertical':
           cropper.scaleY(-cropper.getData().scaleY || -1);
+          this.update({
+            changed: true
+          });
           break;
 
         default:
@@ -148,6 +160,7 @@ export default {
     },
 
     keydown(e) {
+      return; // disable keyboard shortcut.
       switch (e.key) {
         // Undo crop
         case 'z':
@@ -270,6 +283,7 @@ export default {
         autoCrop: false,
         dragMode: 'move',
         background: false,
+        toggleDragModeOnDblclick: false, // disable dblclick edit mode.
 
         ready: () => {
           if (this.croppedData) {
@@ -318,6 +332,24 @@ export default {
           }).toDataURL(data.type),
         });
         this.stop();
+      }
+    },
+
+    apply() {
+      const { cropper, data } = this;
+
+      if (!data.cropping) {
+        this.croppedData = cropper.getData();
+        this.canvasData = cropper.getCanvasData();
+        this.cropBoxData = cropper.getCropBoxData();
+
+        this.update({
+          changed: false,
+          previousUrl: data.url,
+          url: cropper.getCroppedCanvas(data.type === 'image/png' ? {} : {
+            fillColor: '#fff',
+          }).toDataURL(data.type),
+        });
       }
     },
 

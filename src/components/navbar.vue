@@ -20,7 +20,7 @@
       >
         <span class="fa fa-undo" />
       </button>
-      <button
+      <!-- <button
         v-if="data.loaded && !data.cropping"
         type="button"
         class="nav__button nav__button--danger"
@@ -28,7 +28,7 @@
         title="Delete (Delete)"
       >
         <span class="fa fa-trash" />
-      </button>
+      </button> -->
       <button
         v-if="data.cropping"
         type="button"
@@ -39,13 +39,22 @@
         <span class="fa fa-ban" />
       </button>
       <button
+        v-if="data.loaded && !data.cropping && data.changed"
+        type="button"
+        class="nav__button nav__button--success"
+        data-action="apply"
+        title="Apply"
+      >
+        <span class="fa fa-check" />
+      </button>
+      <button
         v-if="data.cropping"
         type="button"
         class="nav__button nav__button--success"
         data-action="crop"
         title="OK (Enter)"
       >
-        <span class="fa fa-check" />
+        <span class="fa fa-thumbs-o-up" />
       </button>
       <a
         v-if="downloadable && data.loaded"
@@ -54,11 +63,11 @@
         :download="data.name"
         :href="data.url"
       ><span class="fa fa-download" /></a>
-      <a
+      <!-- <a
         class="nav__button"
         href="https://github.com/fengyuanchen/photo-editor"
         title="View on GitHub"
-      ><span class="fa fa-github" /></a>
+      ><span class="fa fa-github" /></a> -->
     </nav>
   </div>
 </template>

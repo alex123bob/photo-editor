@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       data: {
+        changed: false, // used for rotation, flip.
         cropped: false,
         cropping: false,
         loaded: false,
@@ -57,6 +58,10 @@ export default {
 
         case 'remove':
           editor.reset();
+          break;
+
+        case 'apply':
+          editor.apply();
           break;
 
         default:

@@ -89,7 +89,24 @@ export default {
     update(data) {
       Object.assign(this.data, data);
     },
+
+    async loadImg(url) {
+      let blob = await fetch(url).then(r => r.blob());
+      let name = url.slice(url.lastIndexOf('/') + 1).replace(/\?.*/i, '');
+      blob.lastModifiedDate = new Date();
+      blob.name = name || `${Date.now().toString()}.jpeg`;
+      this.read([blob]).then((data) => {
+        this.update(data);
+      }).catch((e) => {
+        this.alert(e);
+      });
+    }
   },
+
+  mounted() {
+    const url = 'https://static.pullpath.com.cn/welcome_dev/upload/path/bit/42_Image.jpg';
+    this.loadImg(url);
+  }
 };
 </script>
 
