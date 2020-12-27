@@ -100,11 +100,20 @@ export default {
       }).catch((e) => {
         this.alert(e);
       });
+    },
+
+    getParameterByName(name, url = window.location.href) {
+      name = name.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
   },
 
   mounted() {
-    const url = 'https://static.pullpath.com.cn/welcome_dev/upload/path/bit/42_Image.jpg';
+    const url = this.getParameterByName('photo');
     this.loadImg(url);
   }
 };

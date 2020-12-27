@@ -64,6 +64,10 @@ export default {
           editor.apply();
           break;
 
+        case 'save':
+          editor.save();
+          break;
+
         default:
       }
     },

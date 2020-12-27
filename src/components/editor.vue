@@ -353,6 +353,11 @@ export default {
       }
     },
 
+    save() {
+      const { cropper, data } = this;
+      window.parent.postMessage(data.url, '*');
+    },
+
     clear() {
       if (this.data.cropping) {
         this.cropper.clear();

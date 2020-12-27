@@ -56,13 +56,22 @@
       >
         <span class="fa fa-thumbs-o-up" />
       </button>
-      <a
+      <button
+        v-if="data.loaded && !data.cropping"
+        type="button"
+        class="nav__button nav__button--success"
+        data-action="save"
+        title="Save"
+      >
+        <span class="fa fa-save" />
+      </button>
+      <!-- <a
         v-if="downloadable && data.loaded"
         class="nav__button nav__button--success"
         title="Download"
         :download="data.name"
         :href="data.url"
-      ><span class="fa fa-download" /></a>
+      ><span class="fa fa-download" /></a> -->
       <!-- <a
         class="nav__button"
         href="https://github.com/fengyuanchen/photo-editor"
