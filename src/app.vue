@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <header class="header">
-      <span class="title">Photo Editor</span>
+      <span class="title" @click="closeWindow"><i class="fa fa-close"></i></span>
       <navbar
         :data="data"
         @change="change"
@@ -40,6 +40,9 @@ export default {
   },
 
   methods: {
+    closeWindow() {
+      window.parent.postMessage('closewindow', '*');
+    },
     change(action) {
       const { editor } = this.$refs;
 

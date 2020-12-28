@@ -114,7 +114,7 @@ export default {
 
   mounted() {
     const url = this.getParameterByName('photo');
-    this.loadImg(url);
+    url && this.loadImg(url);
   }
 };
 </script>
