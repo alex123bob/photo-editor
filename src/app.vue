@@ -41,7 +41,9 @@ export default {
 
   methods: {
     closeWindow() {
-      window.parent.postMessage('closewindow', '*');
+      window.parent.postMessage({
+        type: 'close-window'
+      }, '*');
     },
     change(action) {
       const { editor } = this.$refs;
