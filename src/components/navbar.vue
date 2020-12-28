@@ -4,13 +4,13 @@
       class="nav"
       @click="click"
     >
-      <label
+      <!-- <label
         v-if="!data.loaded"
         class="nav__button"
         for="file"
         title="Upload"
         role="button"
-      ><span class="fa fa-upload" /></label>
+      ><span class="fa fa-upload" /></label> -->
       <button
         v-if="data.cropped"
         type="button"
@@ -57,7 +57,7 @@
         <span class="fa fa-thumbs-o-up" />
       </button>
       <button
-        v-if="data.loaded && !data.cropping"
+        v-if="data.loaded && !data.cropping && !data.changed"
         type="button"
         class="nav__button nav__button--success"
         data-action="save"
