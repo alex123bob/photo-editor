@@ -357,7 +357,10 @@ export default {
       const { cropper, data } = this;
       window.parent.postMessage({
         type: 'save-photo',
-        value: data.url
+        value: {
+          dataUrl: data.url,
+          name: data.name
+        }
       }, '*');
     },
 
