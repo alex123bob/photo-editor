@@ -470,7 +470,7 @@ export default {
   width: 2rem;
 
   &.disabled {
-    color: #CCCCCC;
+    color: #999;
   }
 
   &:focus {
@@ -484,7 +484,7 @@ export default {
 
   &.disabled:hover {
     background-color: transparent;
-    color: #CCCCCC;
+    color: #999;
   }
 }
 </style>
