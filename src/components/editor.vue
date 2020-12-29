@@ -283,6 +283,7 @@ export default {
         autoCrop: false,
         dragMode: 'move',
         background: false,
+        aspectRatio: 1, // enable a square cropper box.
         toggleDragModeOnDblclick: false, // disable dblclick edit mode.
 
         ready: () => {
