@@ -19,6 +19,7 @@
     >
       <button
         class="toolbar__button"
+        :class="{disabled:data.changed}"
         data-action="move"
         title="Move (M)"
       >
@@ -26,6 +27,7 @@
       </button>
       <button
         class="toolbar__button"
+        :class="{disabled:data.changed}"
         data-action="crop"
         title="Crop (C)"
       >
@@ -47,6 +49,7 @@
       </button>
       <button
         class="toolbar__button"
+        :class="{disabled:!canChange()}"
         data-action="rotate-left"
         title="Rotate Left (L)"
       >
@@ -54,6 +57,7 @@
       </button>
       <button
         class="toolbar__button"
+        :class="{disabled:!canChange()}"
         data-action="rotate-right"
         title="Rotate Right (R)"
       >
@@ -61,6 +65,7 @@
       </button>
       <button
         class="toolbar__button"
+        :class="{disabled:!canChange()}"
         data-action="flip-horizontal"
         title="Flip Horizontal (H)"
       >
@@ -68,6 +73,7 @@
       </button>
       <button
         class="toolbar__button"
+        :class="{disabled:!canChange()}"
         data-action="flip-vertical"
         title="Flip Vertical (V)"
       >
@@ -95,7 +101,7 @@ export default {
       canvasData: null,
       cropBoxData: null,
       croppedData: null,
-      cropper: null,
+      cropper: null
     };
   },
 
@@ -109,14 +115,24 @@ export default {
   },
 
   methods: {
+
+    /**
+     * whether or not can we change photo direction or flip them.
+     */
+    canChange() {
+      const { cropper, data } = this;
+      const dragMode = cropper.options.dragMode;
+      return dragMode !== 'crop' && !data.cropping
+    },
+
     click({ target }) {
-      const { cropper } = this;
+      const { cropper, data } = this;
       const action = target.getAttribute('data-action') || target.parentElement.getAttribute('data-action');
 
       switch (action) {
         case 'move':
         case 'crop':
-          cropper.setDragMode(action);
+          !data.changed && cropper.setDragMode(action);
           break;
 
         case 'zoom-in':
@@ -128,31 +144,39 @@ export default {
           break;
 
         case 'rotate-left':
-          cropper.rotate(-90);
-          this.update({
-            changed: true
-          });
+          if (this.canChange()) {
+            cropper.rotate(-90);
+            this.update({
+              changed: true
+            });
+          }
           break;
 
         case 'rotate-right':
-          cropper.rotate(90);
-          this.update({
-            changed: true
-          });
+          if (this.canChange()) {
+            cropper.rotate(90);
+            this.update({
+              changed: true
+            });
+          }
           break;
 
         case 'flip-horizontal':
-          cropper.scaleX(-cropper.getData().scaleX || -1);
-          this.update({
-            changed: true
-          });
+          if (this.canChange()) {
+            cropper.scaleX(-cropper.getData().scaleX || -1);
+            this.update({
+              changed: true
+            });
+          }
           break;
 
         case 'flip-vertical':
-          cropper.scaleY(-cropper.getData().scaleY || -1);
-          this.update({
-            changed: true
-          });
+          if (this.canChange()) {
+            cropper.scaleY(-cropper.getData().scaleY || -1);
+            this.update({
+              changed: true
+            });
+          }
           break;
 
         default:
@@ -445,6 +469,10 @@ export default {
   text-align: center;
   width: 2rem;
 
+  &.disabled {
+    color: #CCCCCC;
+  }
+
   &:focus {
     outline: none;
   }
@@ -452,6 +480,11 @@ export default {
   &:hover {
     background-color: #0074d9;
     color: #fff;
+  }
+
+  &.disabled:hover {
+    background-color: transparent;
+    color: #CCCCCC;
   }
 }
 </style>
