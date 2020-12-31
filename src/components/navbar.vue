@@ -54,7 +54,7 @@
         data-action="crop"
         title="OK (Enter)"
       >
-        <span class="fa fa-thumbs-o-up" />
+        <span class="fa fa-crop" />
       </button>
       <button
         v-if="data.loaded && !data.cropping && !data.changed"

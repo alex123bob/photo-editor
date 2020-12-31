@@ -149,6 +149,7 @@ export default {
             this.update({
               changed: true
             });
+            this.apply();
           }
           break;
 
@@ -158,6 +159,7 @@ export default {
             this.update({
               changed: true
             });
+            this.apply();
           }
           break;
 
@@ -167,6 +169,7 @@ export default {
             this.update({
               changed: true
             });
+            this.apply();
           }
           break;
 
@@ -176,6 +179,7 @@ export default {
             this.update({
               changed: true
             });
+            this.apply();
           }
           break;
 
