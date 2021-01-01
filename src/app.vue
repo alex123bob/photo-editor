@@ -27,7 +27,6 @@ export default {
   data() {
     return {
       data: {
-        changed: false, // used for rotation, flip.
         cropped: false,
         cropping: false,
         loaded: false,

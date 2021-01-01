@@ -39,15 +39,6 @@
         <span class="fa fa-ban" />
       </button>
       <button
-        v-if="data.loaded && !data.cropping && data.changed"
-        type="button"
-        class="nav__button nav__button--success"
-        data-action="apply"
-        title="Apply"
-      >
-        <span class="fa fa-check" />
-      </button>
-      <button
         v-if="data.cropping"
         type="button"
         class="nav__button nav__button--success"
@@ -57,7 +48,7 @@
         <span class="fa fa-crop" />
       </button>
       <button
-        v-if="data.loaded && !data.cropping && !data.changed"
+        v-if="data.loaded && !data.cropping"
         type="button"
         class="nav__button nav__button--success"
         data-action="save"

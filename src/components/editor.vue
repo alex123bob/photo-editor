@@ -19,7 +19,6 @@
     >
       <button
         class="toolbar__button"
-        :class="{disabled:data.changed}"
         data-action="move"
         title="Move (M)"
       >
@@ -27,7 +26,6 @@
       </button>
       <button
         class="toolbar__button"
-        :class="{disabled:data.changed}"
         data-action="crop"
         title="Crop (C)"
       >
@@ -49,7 +47,6 @@
       </button>
       <button
         class="toolbar__button"
-        :class="{disabled:!canChange()}"
         data-action="rotate-left"
         title="Rotate Left (L)"
       >
@@ -57,7 +54,6 @@
       </button>
       <button
         class="toolbar__button"
-        :class="{disabled:!canChange()}"
         data-action="rotate-right"
         title="Rotate Right (R)"
       >
@@ -65,7 +61,6 @@
       </button>
       <button
         class="toolbar__button"
-        :class="{disabled:!canChange()}"
         data-action="flip-horizontal"
         title="Flip Horizontal (H)"
       >
@@ -73,7 +68,6 @@
       </button>
       <button
         class="toolbar__button"
-        :class="{disabled:!canChange()}"
         data-action="flip-vertical"
         title="Flip Vertical (V)"
       >
@@ -116,15 +110,6 @@ export default {
 
   methods: {
 
-    /**
-     * whether or not can we change photo direction or flip them.
-     */
-    canChange() {
-      const { cropper, data } = this;
-      const dragMode = cropper.options.dragMode;
-      return dragMode !== 'crop' && !data.cropping
-    },
-
     click({ target }) {
       const { cropper, data } = this;
       const action = target.getAttribute('data-action') || target.parentElement.getAttribute('data-action');
@@ -132,7 +117,7 @@ export default {
       switch (action) {
         case 'move':
         case 'crop':
-          !data.changed && cropper.setDragMode(action);
+          cropper.setDragMode(action);
           break;
 
         case 'zoom-in':
@@ -144,51 +129,27 @@ export default {
           break;
 
         case 'rotate-left':
-          if (this.canChange()) {
-            cropper.rotate(-90);
-            this.update({
-              changed: true
-            });
-            this.apply();
-          }
+          cropper.rotate(-90);
           break;
 
         case 'rotate-right':
-          if (this.canChange()) {
-            cropper.rotate(90);
-            this.update({
-              changed: true
-            });
-            this.apply();
-          }
+          cropper.rotate(90);
           break;
 
         case 'flip-horizontal':
-          if (this.canChange()) {
-            cropper.scaleX(-cropper.getData().scaleX || -1);
-            this.update({
-              changed: true
-            });
-            this.apply();
-          }
+          cropper.scaleX(-cropper.getData().scaleX || -1);
           break;
 
         case 'flip-vertical':
-          if (this.canChange()) {
-            cropper.scaleY(-cropper.getData().scaleY || -1);
-            this.update({
-              changed: true
-            });
-            this.apply();
-          }
+          cropper.scaleY(-cropper.getData().scaleY || -1);
           break;
 
         default:
+          break;
       }
     },
 
     keydown(e) {
-      return; // disable keyboard shortcut.
       switch (e.key) {
         // Undo crop
         case 'z':
@@ -312,7 +273,7 @@ export default {
         dragMode: 'move',
         background: false,
         aspectRatio: 1, // enable a square cropper box.
-        toggleDragModeOnDblclick: false, // disable dblclick edit mode.
+        toggleDragModeOnDblclick: true, // disable dblclick edit mode.
 
         ready: () => {
           if (this.croppedData) {
@@ -373,7 +334,6 @@ export default {
         this.cropBoxData = cropper.getCropBoxData();
 
         this.update({
-          changed: false,
           previousUrl: data.url,
           url: cropper.getCroppedCanvas(data.type === 'image/png' ? {} : {
             fillColor: '#fff',
@@ -384,6 +344,9 @@ export default {
 
     save() {
       const { cropper, data } = this;
+      if (!data.cropped) {
+        this.apply();
+      }
       window.parent.postMessage({
         type: 'save-photo',
         value: {
