@@ -270,7 +270,7 @@ export default {
 
       this.cropper = new Cropper(this.$refs.image, {
         autoCrop: false,
-        dragMode: 'move',
+        dragMode: 'crop',
         background: false,
         aspectRatio: 1, // enable a square cropper box.
         toggleDragModeOnDblclick: true, // disable dblclick edit mode.
