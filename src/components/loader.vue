@@ -91,10 +91,17 @@ export default {
     },
 
     async loadImg(url) {
-      let blob = await fetch(url).then(r => r.blob());
-      let name = url.slice(url.lastIndexOf('/') + 1).replace(/\?.*/i, '');
-      blob.lastModifiedDate = new Date();
-      blob.name = name || `${Date.now().toString()}.jpeg`;
+      let blob
+      // support loading image via blob
+      if (url instanceof File || url instanceof Blob) {
+        blob = url;
+      }
+      else {
+        blob = await fetch(url).then(r => r.blob());
+        let name = url.slice(url.lastIndexOf('/') + 1).replace(/\?.*/i, '');
+        blob.lastModifiedDate = new Date();
+        blob.name = name || `${Date.now().toString()}.jpeg`;
+      }
       this.read([blob]).then((data) => {
         this.update(data);
       }).catch((e) => {
@@ -109,12 +116,31 @@ export default {
       if (!results) return null;
       if (!results[2]) return '';
       return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    },
+
+    readMessage(evt) {
+      var data = evt.data;
+      switch (data.type) {
+        case 'load:img-blob':
+          this.loadImg(data.value.file);
+          break;
+      
+        default:
+          break;
+      }
     }
   },
 
   mounted() {
     const url = this.getParameterByName('photo');
     url && this.loadImg(url);
+
+    window.addEventListener('message', this.readMessage);
+  },
+
+  beforeDestroy() {
+    // no need currently. as data:loaded will destroy `loader`.
+    // window.removeEventListener('message', this.readMessage);
   }
 };
 </script>
