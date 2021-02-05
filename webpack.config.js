@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
 
@@ -42,6 +43,10 @@ module.exports = (env = {}) => ({
       template: './src/index.html',
     }),
     new HardSourceWebpackPlugin(),
-    new BundleAnalyzerPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: './src/assets/**/*', to: path.resolve(__dirname, './www/')}
+      ],
+    }),
   ],
 });
