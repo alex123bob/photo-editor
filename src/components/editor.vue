@@ -99,6 +99,24 @@ export default {
     };
   },
 
+  updated() {
+    // image loaded.
+    if (this.data.loaded && !this.data.cropped) {
+      let searchStr = location.search;
+      let needIntro = false;
+      searchStr = searchStr.replace(/^\?/, '');
+      searchStr.split('&').forEach(param => {
+        let arr = param.split('=');
+        if (arr[0] === 'intro' && arr[1] === 'true') {
+          needIntro = true;
+        }
+      });
+      setTimeout(() => {
+        needIntro && introJs().setOptions({ showBullets: false, tooltipClass: 'customTooltip' }).start();
+      }, 300);
+    }
+  },
+
   mounted() {
     window.addEventListener('keydown', (this.onKeydown = this.keydown.bind(this)));
   },

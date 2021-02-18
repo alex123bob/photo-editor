@@ -28,3 +28,7 @@ body {
 .header .title i {
   cursor: pointer;
 }
+
+.customTooltip {
+  right: 0;
+}

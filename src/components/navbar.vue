@@ -35,6 +35,8 @@
         class="nav__button nav__button--danger"
         data-action="clear"
         title="Cancel (Esc)"
+        data-title="Cancel"
+        data-intro="Click it to cancel your operation."
       >
         <span class="fa fa-ban" />
       </button>
@@ -44,6 +46,8 @@
         class="nav__button nav__button--success"
         data-action="crop"
         title="OK (Enter)"
+        data-title="Confirm"
+        data-intro="Click it to confirm your cropped image."
       >
         <span class="fa fa-crop" />
       </button>
