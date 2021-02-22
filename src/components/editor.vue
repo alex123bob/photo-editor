@@ -112,7 +112,9 @@ export default {
         }
       });
       setTimeout(() => {
-        needIntro && introJs().setOptions({ showBullets: false, tooltipClass: 'customTooltip' }).start();
+        needIntro && introJs().setOptions({ showBullets: false, tooltipClass: 'customTooltip' }).start().oncomplete(() => {
+          // event after completing tutorials.
+        });
       }, 300);
     }
   },
