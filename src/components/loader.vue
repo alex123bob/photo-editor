@@ -42,7 +42,8 @@ export default {
 
         const file = files[0];
 
-        if (/^image\/\w+$/.test(file.type)) {
+        // skip over type change as some server will send image with other types.
+        if (true || /^image\/\w+$/.test(file.type)) {
           if (URL) {
             resolve({
               loaded: true,
