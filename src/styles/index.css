@@ -32,3 +32,7 @@ body {
 .customTooltip {
   right: 0;
 }
+
+.alignToLeft {
+  left: 0;
+}

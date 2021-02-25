@@ -21,6 +21,8 @@
         class="toolbar__button"
         data-action="move"
         title="Move (M)"
+        data-intro="Set to move mode"
+        data-tooltipClass="alignToLeft"
       >
         <span class="fa fa-arrows" />
       </button>
@@ -28,6 +30,8 @@
         class="toolbar__button"
         data-action="crop"
         title="Crop (C)"
+        data-intro="Set to crop mode"
+        data-tooltipClass="alignToLeft"
       >
         <span class="fa fa-crop" />
       </button>
@@ -112,9 +116,11 @@ export default {
         }
       });
       setTimeout(() => {
-        needIntro && introJs().setOptions({ showBullets: false, tooltipClass: 'customTooltip' }).start().oncomplete(() => {
-          // event after completing tutorials.
-        });
+        if (needIntro) {
+          introJs().setOptions({ showBullets: false, tooltipClass: 'customTooltip' }).start().oncomplete(() => {
+            // event after completing tutorials.
+          });
+        }
       }, 300);
     }
   },
